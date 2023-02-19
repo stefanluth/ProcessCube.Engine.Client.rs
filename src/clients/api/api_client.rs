@@ -2,16 +2,17 @@ use reqwest::Client;
 
 const ENGINE_API_ENDPOINT: &str = "/atlas_engine/api/v1";
 
-pub struct EngineClient {
+#[derive(Clone)]
+pub struct ApiClient {
     pub http_client: Client,
     engine_url: String,
     auth_token: String,
 }
 
-impl EngineClient {
-    pub fn new(engine_url: &str, auth_token: &str) -> EngineClient {
+impl ApiClient {
+    pub fn new(engine_url: &str, auth_token: &str) -> ApiClient {
         let http_client = Client::new();
-        EngineClient {
+        ApiClient {
             http_client,
             engine_url: engine_url.to_string(),
             auth_token: auth_token.to_string(),
