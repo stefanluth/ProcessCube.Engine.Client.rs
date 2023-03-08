@@ -1,4 +1,4 @@
-use crate::clients::api::api_client::ApiClient;
+use crate::clients::{api::api_client::ApiClient, error::EngineError};
 
 use super::application_info::ApplicationInfo;
 
@@ -33,29 +33,32 @@ impl ApplicationInfoClient {
         }
     }
 
-    pub async fn get_application_info(&self) -> Result<ApplicationInfo, reqwest::Error> {
+    pub async fn get_application_info(&self) -> Result<ApplicationInfo, EngineError> {
         let response = self
             .api_client
             .http_client
             .get(&self.application_info_url)
             .header("Authorization", self.api_client.get_auth_token())
             .send()
-            .await?
-            .json::<ApplicationInfo>()
             .await?;
-        Ok(response)
+        match response.status() {
+            reqwest::StatusCode::OK => Ok(response.json::<ApplicationInfo>().await?),
+            _ => Err(response.json::<EngineError>().await?),
+        }
     }
 
-    pub async fn get_authority_info(&self) -> Result<String, reqwest::Error> {
+    pub async fn get_authority_info(&self) -> Result<String, EngineError> {
         let response = self
             .api_client
             .http_client
             .get(&self.authority_info_url)
             .header("Authorization", self.api_client.get_auth_token())
             .send()
-            .await?
-            .json::<String>()
             .await?;
-        Ok(response)
+
+        match response.status() {
+            reqwest::StatusCode::OK => Ok(response.text().await?),
+            _ => Err(response.json::<EngineError>().await?),
+        }
     }
 }

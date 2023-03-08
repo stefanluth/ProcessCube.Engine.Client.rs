@@ -1,9 +1,6 @@
-use crate::clients::api::api_client::ApiClient;
+use crate::clients::{api::api_client::ApiClient, error::EngineError};
 
-use super::{
-    error::EngineError,
-    process_definition::{ProcessDefinition, ProcessDefinitionList},
-};
+use super::process_definition::{ProcessDefinition, ProcessDefinitionList};
 
 const PROCESS_DEFINITIONS_ENDPOINT: &str = "/process_definitions";
 
