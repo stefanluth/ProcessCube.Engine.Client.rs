@@ -24,21 +24,27 @@ async fn main() -> Result<(), EngineError> {
         .await?;
     println!("{:#?}", response);
 
-    let response = process_definition_client
+    if let Err(response) = process_definition_client
         .get_process_definition_by_id("this_should_fail")
-        .await?;
-    println!("{:#?}", response);
+        .await
+    {
+        println!("{:#?}", response);
+    }
 
-    let response = process_definition_client
+    if let Err(response) = process_definition_client
         .delete_process_definition_by_id("this_should_fail", Some(true))
-        .await?;
-    println!("{:#?}", response);
+        .await
+    {
+        println!("{:#?}", response);
+    }
 
     // process_instance_client
     let process_model_client = client_factory.create_process_model_client();
 
     let response = process_model_client.get_process_models(None, None).await?;
     println!("{:#?}", response);
+
+    println!("End of main function.");
 
     Ok(())
 }
