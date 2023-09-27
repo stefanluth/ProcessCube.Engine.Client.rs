@@ -1,2 +1,3 @@
 # EngineClient.rs
-Rust based client for the 5Minds Engine
+
+5Minds Engine client written in Rust.

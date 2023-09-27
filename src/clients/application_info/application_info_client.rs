@@ -5,6 +5,7 @@ use super::application_info::ApplicationInfo;
 const APPLICATION_INFO_ENDPOINT: &str = "/info";
 const AUTHORITY_INFO_ENDPOINT: &str = "/authority";
 
+/// A client for communicating with the 5Minds Engine.
 #[derive(Clone)]
 pub struct ApplicationInfoClient {
     api_client: ApiClient,
@@ -13,6 +14,23 @@ pub struct ApplicationInfoClient {
 }
 
 impl ApplicationInfoClient {
+    /// Creates a new instance of the ApplicationInfoClient.
+    ///
+    /// # Arguments
+    /// * `api_client` - The ApiClient to use for communication with the 5Minds Engine.
+    ///
+    /// # Example
+    /// ```
+    /// use engine_client::clients::{api::api_client::ApiClient, application_info::application_info_client::ApplicationInfoClient, error::EngineError};
+    /// const ENGINE_URL: &str = "http://localhost:10560";
+    ///
+    /// #[tokio::main]
+    /// async fn main() -> Result<(), EngineError> {
+    ///   let api_client = ApiClient::new(ENGINE_URL, "dummy_auth_token");
+    ///   let application_info_client = ApplicationInfoClient::new(api_client);
+    ///   Ok(())
+    /// }
+    /// ```
     pub fn new(api_client: ApiClient) -> ApplicationInfoClient {
         let application_info_url = format!(
             "{}{}{}",

@@ -2,6 +2,7 @@ use std::fmt;
 
 use serde::{Deserialize, Serialize};
 
+/// Represents an error returned by the 5Minds Engine.
 #[derive(Debug, Deserialize, Serialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct EngineError {
@@ -25,8 +26,8 @@ impl EngineError {
 }
 
 impl From<reqwest::Error> for EngineError {
+    /// Converts a reqwest::Error into an EngineError.
     fn from(err: reqwest::Error) -> Self {
-        // println!("--- reqwest::Error: {}", err);
         EngineError::new(
             "InternalError".to_string(),
             "Error processing request".to_string(),
@@ -37,6 +38,7 @@ impl From<reqwest::Error> for EngineError {
 }
 
 impl fmt::Display for EngineError {
+    /// Formats an EngineError.
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
