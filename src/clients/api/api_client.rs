@@ -1,5 +1,7 @@
 use reqwest::Client;
 
+use crate::clients::error::EngineError;
+
 const ENGINE_API_ENDPOINT: &str = "/atlas_engine/api/v1";
 
 /// A client for communicating with the 5Minds Engine.
@@ -27,7 +29,7 @@ impl ApiClient {
     /// #[tokio::main]
     /// async fn main() -> Result<(), EngineError> {
     ///   let api_client = ApiClient::new(ENGINE_URL, "dummy_auth_token");
-    ///  Ok(())
+    ///   Ok(())
     /// }
     /// ```
     pub fn new(engine_url: &str, auth_token: &str) -> ApiClient {
@@ -52,5 +54,84 @@ impl ApiClient {
     /// Returns the authentication token used by the ApiClient.
     pub fn get_auth_token(&self) -> &str {
         &self.auth_token
+    }
+
+    /// Sends a GET request to the given URL and returns the response as a deserialized object.
+    ///
+    /// # Arguments
+    /// * `url` - The URL to send the GET request to.
+    pub async fn get<T>(&self, url: &str) -> Result<T, EngineError>
+    where
+        T: serde::de::DeserializeOwned,
+    {
+        let response = self
+            .http_client
+            .get(url)
+            .header("Authorization", self.get_auth_token())
+            .send()
+            .await?;
+
+        match response.status() {
+            reqwest::StatusCode::OK => Ok(response.json::<T>().await?),
+            _ => Err(response.json::<EngineError>().await?),
+        }
+    }
+
+    /// Sends a POST request to the given URL and returns the response as a deserialized object.
+    ///
+    /// # Arguments
+    /// * `url` - The URL to send the POST request to.
+    /// * `body` - The body of the POST request as a JSON object. If no body is required, this can be set to `None`.
+    pub async fn post<T>(
+        &self,
+        url: &str,
+        body: Option<&serde_json::Value>,
+    ) -> Result<T, EngineError>
+    where
+        T: serde::de::DeserializeOwned,
+    {
+        let response = match body {
+            Some(body) => {
+                self.http_client
+                    .post(url)
+                    .header("Authorization", self.get_auth_token())
+                    .json(body)
+                    .send()
+                    .await?
+            }
+            None => {
+                self.http_client
+                    .post(url)
+                    .header("Authorization", self.get_auth_token())
+                    .send()
+                    .await?
+            }
+        };
+
+        match response.status() {
+            reqwest::StatusCode::OK => Ok(response.json::<T>().await?),
+            _ => Err(response.json::<EngineError>().await?),
+        }
+    }
+
+    /// Sends a DELETE request to the given URL and returns the response as a deserialized object.
+    ///
+    /// # Arguments
+    /// * `url` - The URL to send the DELETE request to.
+    pub async fn delete<T>(&self, url: &str) -> Result<T, EngineError>
+    where
+        T: serde::de::DeserializeOwned,
+    {
+        let response = self
+            .http_client
+            .delete(url)
+            .header("Authorization", self.get_auth_token())
+            .send()
+            .await?;
+
+        match response.status() {
+            reqwest::StatusCode::OK => Ok(response.json::<T>().await?),
+            _ => Err(response.json::<EngineError>().await?),
+        }
     }
 }
