@@ -36,15 +36,7 @@ async fn main() -> Result<(), EngineError> {
         .get_process_definition_by_id("this_should_fail")
         .await
     {
-        println!("------------------- Process Definition Error 1 -------------------");
-        println!("{:#?}", response);
-    }
-
-    if let Err(response) = process_definition_client
-        .delete_process_definition_by_id("this_should_fail", Some(true))
-        .await
-    {
-        println!("------------------- Process Definition Error 2 -------------------");
+        println!("------------------- Process Definition Error Expected -------------------");
         println!("{:#?}", response);
     }
 

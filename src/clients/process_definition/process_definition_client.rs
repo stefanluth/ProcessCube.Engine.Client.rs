@@ -4,6 +4,7 @@ use super::process_definition::{ProcessDefinition, ProcessDefinitionList};
 
 const PROCESS_DEFINITIONS_ENDPOINT: &str = "/process_definitions";
 
+/// A client for communicating with the 5Minds Engine's ProcessDefinition API.
 #[derive(Clone)]
 pub struct ProcessDefinitionClient {
     api_client: ApiClient,
@@ -11,6 +12,22 @@ pub struct ProcessDefinitionClient {
 }
 
 impl ProcessDefinitionClient {
+    /// Creates a new instance of the ProcessDefinitionClient.
+    ///
+    /// # Arguments
+    /// * `api_client` - The ApiClient to use for communication with the 5Minds Engine.
+    ///
+    /// # Example
+    /// ```
+    /// use engine_client::clients::{api::api_client::ApiClient, process_definition::process_definition_client::ProcessDefinitionClient, error::EngineError};
+    /// const ENGINE_URL: &str = "http://localhost:10560";
+    ///
+    /// #[tokio::main]
+    /// async fn main() -> Result<(), EngineError> {
+    ///     let api_client = ApiClient::new(ENGINE_URL, "dummy_auth_token");
+    ///     let process_definition_client = ProcessDefinitionClient::new(api_client);
+    ///     Ok(())
+    /// }
     pub fn new(api_client: ApiClient) -> ProcessDefinitionClient {
         let process_definitions_url = format!(
             "{}{}{}",
@@ -24,6 +41,7 @@ impl ProcessDefinitionClient {
         }
     }
 
+    /// Returns all ProcessDefinitions deployed to the 5Minds Engine.
     pub async fn get_process_definitions(
         &self,
         offset: Option<u32>,
@@ -40,6 +58,7 @@ impl ProcessDefinitionClient {
         self.api_client.get::<ProcessDefinitionList>(&url).await
     }
 
+    /// Returns the ProcessDefinition with the given ID.
     pub async fn get_process_definition_by_id(
         &self,
         process_definition_id: &str,
@@ -49,6 +68,7 @@ impl ProcessDefinitionClient {
         self.api_client.get::<ProcessDefinition>(&url).await
     }
 
+    /// Uploads a new ProcessDefinition to the 5Minds Engine.
     pub async fn upload_process_definition(
         &self,
         xml: &str,
@@ -75,6 +95,7 @@ impl ProcessDefinitionClient {
         }
     }
 
+    /// Deletes the ProcessDefinition with the given ID.
     pub async fn delete_process_definition_by_id(
         &self,
         process_definition_id: &str,
