@@ -36,18 +36,8 @@ impl ProcessDefinitionClient {
         if let Some(limit) = limit {
             url = format!("{}?limit={}", url, limit);
         }
-        let response = self
-            .api_client
-            .http_client
-            .get(&url)
-            .header("Authorization", self.api_client.get_auth_token())
-            .send()
-            .await?;
 
-        match response.status() {
-            reqwest::StatusCode::OK => Ok(response.json::<ProcessDefinitionList>().await?),
-            _ => Err(response.json::<EngineError>().await?),
-        }
+        self.api_client.get::<ProcessDefinitionList>(&url).await
     }
 
     pub async fn get_process_definition_by_id(
@@ -55,18 +45,8 @@ impl ProcessDefinitionClient {
         process_definition_id: &str,
     ) -> Result<ProcessDefinition, EngineError> {
         let url = format!("{}/{}", self.process_definitions_url, process_definition_id);
-        let response = self
-            .api_client
-            .http_client
-            .get(&url)
-            .header("Authorization", self.api_client.get_auth_token())
-            .send()
-            .await?;
 
-        match response.status() {
-            reqwest::StatusCode::OK => Ok(response.json::<ProcessDefinition>().await?),
-            _ => Err(response.json::<EngineError>().await?),
-        }
+        self.api_client.get::<ProcessDefinition>(&url).await
     }
 
     pub async fn upload_process_definition(
@@ -106,17 +86,7 @@ impl ProcessDefinitionClient {
             process_definition_id,
             delete_all_related_data.unwrap_or(false)
         );
-        let response = self
-            .api_client
-            .http_client
-            .delete(&url)
-            .header("Authorization", self.api_client.get_auth_token())
-            .send()
-            .await?;
 
-        match response.status() {
-            reqwest::StatusCode::NO_CONTENT => Ok(()),
-            _ => Err(response.json::<EngineError>().await?),
-        }
+        self.api_client.delete::<()>(&url).await
     }
 }

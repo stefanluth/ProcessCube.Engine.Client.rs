@@ -41,18 +41,8 @@ impl ProcessModelClient {
         if let Some(limit) = limit {
             url = format!("{}?limit={}", url, limit);
         }
-        let response = self
-            .api_client
-            .http_client
-            .get(&url)
-            .header("Authorization", self.api_client.get_auth_token())
-            .send()
-            .await?;
 
-        match response.status() {
-            reqwest::StatusCode::OK => Ok(response.json::<ProcessModelList>().await?),
-            _ => Err(response.json::<EngineError>().await?),
-        }
+        self.api_client.get::<ProcessModelList>(&url).await
     }
 
     pub async fn get_process_model_by_id(
@@ -60,18 +50,8 @@ impl ProcessModelClient {
         process_model_id: &str,
     ) -> Result<ProcessModel, EngineError> {
         let url = format!("{}/{}", self.process_models_url, process_model_id);
-        let response = self
-            .api_client
-            .http_client
-            .get(&url)
-            .header("Authorization", self.api_client.get_auth_token())
-            .send()
-            .await?;
 
-        match response.status() {
-            reqwest::StatusCode::OK => Ok(response.json::<ProcessModel>().await?),
-            _ => Err(response.json::<EngineError>().await?),
-        }
+        self.api_client.get::<ProcessModel>(&url).await
     }
 
     pub async fn delete_process_model_by_id(
@@ -79,18 +59,8 @@ impl ProcessModelClient {
         process_model_id: &str,
     ) -> Result<(), EngineError> {
         let url = format!("{}/{}", self.process_models_url, process_model_id);
-        let response = self
-            .api_client
-            .http_client
-            .delete(&url)
-            .header("Authorization", self.api_client.get_auth_token())
-            .send()
-            .await?;
 
-        match response.status() {
-            reqwest::StatusCode::NO_CONTENT => Ok(()),
-            _ => Err(response.json::<EngineError>().await?),
-        }
+        self.api_client.delete::<()>(&url).await
     }
 
     pub async fn get_process_definition_by_process_model_id(
@@ -101,18 +71,8 @@ impl ProcessModelClient {
             "{}/{}/process_definition",
             self.process_models_url, process_model_id
         );
-        let response = self
-            .api_client
-            .http_client
-            .get(&url)
-            .header("Authorization", self.api_client.get_auth_token())
-            .send()
-            .await?;
 
-        match response.status() {
-            reqwest::StatusCode::OK => Ok(response.json::<ProcessDefinition>().await?),
-            _ => Err(response.json::<EngineError>().await?),
-        }
+        self.api_client.get::<ProcessDefinition>(&url).await
     }
 
     pub async fn start_process_instance_by_process_model_id(
@@ -121,19 +81,11 @@ impl ProcessModelClient {
         request: ProcessStartRequest,
     ) -> Result<ProcessStartResponse, EngineError> {
         let url = format!("{}/{}/start", self.process_models_url, process_model_id);
-        let response = self
-            .api_client
-            .http_client
-            .post(&url)
-            .header("Authorization", self.api_client.get_auth_token())
-            .json(&request)
-            .send()
-            .await?;
+        let request_json = serde_json::to_value(request).expect("Failed to serialize request");
 
-        match response.status() {
-            reqwest::StatusCode::OK => Ok(response.json::<ProcessStartResponse>().await?),
-            _ => Err(response.json::<EngineError>().await?),
-        }
+        self.api_client
+            .post::<ProcessStartResponse>(&url, Some(&request_json))
+            .await
     }
 
     pub async fn enable_process_model_by_id(
@@ -141,18 +93,8 @@ impl ProcessModelClient {
         process_model_id: &str,
     ) -> Result<(), EngineError> {
         let url = format!("{}/{}/enable", self.process_models_url, process_model_id);
-        let response = self
-            .api_client
-            .http_client
-            .post(&url)
-            .header("Authorization", self.api_client.get_auth_token())
-            .send()
-            .await?;
 
-        match response.status() {
-            reqwest::StatusCode::OK => Ok(()),
-            _ => Err(response.json::<EngineError>().await?),
-        }
+        self.api_client.post::<()>(&url, None).await
     }
 
     pub async fn disable_process_model_by_id(
@@ -160,17 +102,7 @@ impl ProcessModelClient {
         process_model_id: &str,
     ) -> Result<(), EngineError> {
         let url = format!("{}/{}/disable", self.process_models_url, process_model_id);
-        let response = self
-            .api_client
-            .http_client
-            .post(&url)
-            .header("Authorization", self.api_client.get_auth_token())
-            .send()
-            .await?;
 
-        match response.status() {
-            reqwest::StatusCode::OK => Ok(()),
-            _ => Err(response.json::<EngineError>().await?),
-        }
+        self.api_client.post::<()>(&url, None).await
     }
 }
