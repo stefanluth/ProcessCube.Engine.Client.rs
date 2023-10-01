@@ -22,12 +22,19 @@ impl EventClient {
     /// # Example
     /// ```
     /// use engine_client::clients::{api::api_client::ApiClient, event::event_client::EventClient, error::EngineError};
+    /// const DUMMY_TOKEN: &str = "Bearer ZHVtbXlfdG9rZW4=";
     /// const ENGINE_URL: &str = "http://localhost:10560";
+    /// // Be sure to have a running 5Minds Engine at the given URL
     ///
     /// #[tokio::main]
     /// async fn main() -> Result<(), EngineError> {
-    ///     let api_client = ApiClient::new(ENGINE_URL, "dummy_auth_token");
+    ///     let api_client = ApiClient::new(ENGINE_URL, DUMMY_TOKEN);
     ///     let event_client = EventClient::new(api_client);
+    ///     // Trigger a message
+    ///     match event_client.trigger_message("Message_1", None, None).await {
+    ///         Ok(_) => println!("Message triggered successfully"),
+    ///         Err(err) => println!("Error triggering message: {}", err),
+    ///     }
     ///     Ok(())
     /// }
     /// ```

@@ -20,12 +20,19 @@ impl ProcessDefinitionClient {
     /// # Example
     /// ```
     /// use engine_client::clients::{api::api_client::ApiClient, process_definition::process_definition_client::ProcessDefinitionClient, error::EngineError};
+    /// const DUMMY_TOKEN: &str = "Bearer ZHVtbXlfdG9rZW4=";
     /// const ENGINE_URL: &str = "http://localhost:10560";
+    /// // Be sure to have a running 5Minds Engine at the given URL
     ///
     /// #[tokio::main]
     /// async fn main() -> Result<(), EngineError> {
-    ///     let api_client = ApiClient::new(ENGINE_URL, "dummy_auth_token");
+    ///     let api_client = ApiClient::new(ENGINE_URL, DUMMY_TOKEN);
     ///     let process_definition_client = ProcessDefinitionClient::new(api_client);
+    ///     // Get all ProcessDefinitions
+    ///     let process_definitions = process_definition_client
+    ///         .get_process_definitions(None, None)
+    ///         .await?;
+    ///     println!("ProcessDefinitions: {:#?}", process_definitions);
     ///     Ok(())
     /// }
     pub fn new(api_client: ApiClient) -> ProcessDefinitionClient {

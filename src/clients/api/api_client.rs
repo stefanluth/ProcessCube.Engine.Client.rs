@@ -24,12 +24,20 @@ impl ApiClient {
     /// # Example
     /// ```
     /// use engine_client::clients::{api::api_client::ApiClient, error::EngineError};
+    /// const DUMMY_TOKEN: &str = "Bearer ZHVtbXlfdG9rZW4=";
     /// const ENGINE_URL: &str = "http://localhost:10560";
+    /// // Be sure to have a running 5Minds Engine at the given URL
     ///
     /// #[tokio::main]
     /// async fn main() -> Result<(), EngineError> {
-    ///   let api_client = ApiClient::new(ENGINE_URL, "dummy_auth_token");
-    ///   Ok(())
+    ///     let api_client = ApiClient::new(ENGINE_URL, DUMMY_TOKEN);
+    ///     // Read the Engine URL
+    ///     println!("Engine URL: {}", api_client.get_engine_url());
+    ///     // Read the Engine API endpoint
+    ///     println!("Engine API endpoint: {}", api_client.get_engine_api_endpoint());
+    ///     // Read the authentication token
+    ///     println!("Auth token: {}", api_client.get_auth_token());
+    ///     Ok(())
     /// }
     /// ```
     pub fn new(engine_url: &str, auth_token: &str) -> ApiClient {

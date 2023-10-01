@@ -22,12 +22,20 @@ impl ApplicationInfoClient {
     /// # Example
     /// ```
     /// use engine_client::clients::{api::api_client::ApiClient, application_info::application_info_client::ApplicationInfoClient, error::EngineError};
+    /// const DUMMY_TOKEN: &str = "Bearer ZHVtbXlfdG9rZW4=";
     /// const ENGINE_URL: &str = "http://localhost:10560";
+    /// // Be sure to have a running 5Minds Engine at the given URL
     ///
     /// #[tokio::main]
     /// async fn main() -> Result<(), EngineError> {
-    ///     let api_client = ApiClient::new(ENGINE_URL, "dummy_auth_token");
+    ///     let api_client = ApiClient::new(ENGINE_URL, DUMMY_TOKEN);
     ///     let application_info_client = ApplicationInfoClient::new(api_client);
+    ///     // Get information about the 5Minds Engine
+    ///     let application_info = application_info_client.get_application_info().await?;
+    ///     println!("Engine version: {}", application_info.version);
+    ///     // Get information about the 5Minds Authority
+    ///     let authority_info = application_info_client.get_authority_info().await?;
+    ///     println!("Authority: {}", authority_info);
     ///     Ok(())
     /// }
     /// ```

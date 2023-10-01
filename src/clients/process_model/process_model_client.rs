@@ -25,12 +25,19 @@ impl ProcessModelClient {
     /// # Example
     /// ```
     /// use engine_client::clients::{api::api_client::ApiClient, process_model::process_model_client::ProcessModelClient, error::EngineError};
+    /// const DUMMY_TOKEN: &str = "Bearer ZHVtbXlfdG9rZW4=";
     /// const ENGINE_URL: &str = "http://localhost:10560";
+    /// // Be sure to have a running 5Minds Engine at the given URL
     ///
     /// #[tokio::main]
     /// async fn main() -> Result<(), EngineError> {
-    ///     let api_client = ApiClient::new(ENGINE_URL, "dummy_auth_token");
+    ///     let api_client = ApiClient::new(ENGINE_URL, DUMMY_TOKEN);
     ///     let process_model_client = ProcessModelClient::new(api_client);
+    ///     // Get all ProcessModels
+    ///     let process_models = process_model_client
+    ///         .get_process_models(None, None)
+    ///         .await?;
+    ///     println!("ProcessModels: {:#?}", process_models);
     ///     Ok(())
     /// }
     /// ```

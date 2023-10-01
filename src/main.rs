@@ -1,18 +1,18 @@
 use engine_client::clients::{client_factory::ClientFactory, error::EngineError};
 
+const DUMMY_TOKEN: &str = "Bearer ZHVtbXlfdG9rZW4=";
 const ENGINE_URL: &str = "http://localhost:10560";
-const AUTH_TOKEN: &str = "Bearer ZHVtbXlfdG9rZW4=";
 
 #[tokio::main]
 async fn main() -> Result<(), EngineError> {
     println!("This is a sample application to demonstrate the usage of the engine client library.");
     println!(
         "The application will connect to the engine at {} using the dummy auth token {}.",
-        ENGINE_URL, AUTH_TOKEN
+        ENGINE_URL, DUMMY_TOKEN
     );
     println!("Make sure that the engine is running at the specified URL before continuing.");
 
-    let client_factory = ClientFactory::new(ENGINE_URL, AUTH_TOKEN);
+    let client_factory = ClientFactory::new(ENGINE_URL, DUMMY_TOKEN);
 
     println!("\n------------------- Application Info Client -------------------");
     let application_info_client = client_factory.create_application_info_client();
