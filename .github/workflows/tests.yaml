@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Set up Rust
         uses: actions-rs/toolchain@v1
         with:
@@ -20,8 +20,23 @@ jobs:
           command: build
           args: --all --verbose
 
+      - name: Start 5Minds Engine
+        run: docker run --name processcube_engine -d -p 10560:80 5minds/processcube_engine:16.0.0
+
+      - name: Wait for 5Minds Engine to start
+        run: sleep 10
+
       - name: Run tests
         uses: actions-rs/cargo@v1
         with:
           command: test
           args: --all --verbose
+
+      - name: Show 5Minds Engine Logs if tests failed
+        if: ${{ job.status == 'failure' }}
+        run: docker logs processcube_engine
+
+      - name: Stop 5Minds Engine
+        run: |
+          docker stop processcube_engine
+          docker rm processcube_engine
