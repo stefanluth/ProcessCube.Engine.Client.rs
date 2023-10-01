@@ -3,36 +3,27 @@ name: Build and Test
 on: [push, pull_request]
 
 jobs:
-  build:
+  build_and_test:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          override: true
-
-      - name: Build
-        uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --all --verbose
 
       - name: Start 5Minds Engine
         run: docker run --name processcube_engine -d -p 10560:80 5minds/processcube_engine:16.0.0
 
-      - name: Wait for 5Minds Engine to start
-        run: sleep 10
+      - name: Install Rust
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y rustc cargo
+
+      - name: Build project
+        run: cargo build --all --verbose
 
       - name: Run tests
-        uses: actions-rs/cargo@v1
-        with:
-          command: test
-          args: --all --verbose
+        run: cargo test --all --verbose
 
-      - name: Show 5Minds Engine Logs if tests failed
+      - name: Show 5Minds Engine logs if tests failed
         if: ${{ job.status == 'failure' }}
         run: docker logs processcube_engine
 
