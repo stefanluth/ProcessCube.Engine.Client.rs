@@ -42,8 +42,8 @@ pub struct FlowNodeInstance {
     end_token: Option<std::collections::HashMap<String, serde_json::Value>>,
     owner_id: String,
     error: Option<serde_json::Value>,
-    started_at: Option<std::time::SystemTime>,
-    finished_at: Option<std::time::SystemTime>,
+    started_at: Option<String>,
+    finished_at: Option<String>,
     triggered_by_flow_node_instance: Option<Box<FlowNodeInstance>>,
 }
 
@@ -76,7 +76,7 @@ impl FlowNodeInstanceState {
 #[serde(rename_all = "camelCase")]
 pub struct ProcessToken {
     flow_node_instance_id: String,
-    created_at: std::time::SystemTime,
+    created_at: String,
     payload: serde_json::Value,
 }
 
@@ -97,8 +97,8 @@ pub struct FlowNodeInstancesQuery {
     pub state: Option<String>,
     pub previous_flow_node_instance_id: Option<String>,
     pub parent_process_instance_id: Option<String>,
-    pub created_at: Option<std::time::SystemTime>,
-    pub updated_at: Option<std::time::SystemTime>,
+    pub created_at: Option<String>,
+    pub updated_at: Option<String>,
 }
 
 impl FlowNodeInstancesQuery {
@@ -108,20 +108,6 @@ impl FlowNodeInstancesQuery {
         fn append_param(parts: &mut Vec<String>, key: &str, value: &Option<String>) {
             if let Some(ref val) = value {
                 parts.push(format!("{}={}", key, val));
-            }
-        }
-
-        fn append_timestamp(
-            parts: &mut Vec<String>,
-            key: &str,
-            value: &Option<std::time::SystemTime>,
-        ) {
-            if let Some(time) = value {
-                let timestamp = time
-                    .duration_since(std::time::UNIX_EPOCH)
-                    .expect("Time went backwards")
-                    .as_secs();
-                parts.push(format!("{}={}", key, timestamp));
             }
         }
 
@@ -156,8 +142,8 @@ impl FlowNodeInstancesQuery {
             &self.parent_process_instance_id,
         );
 
-        append_timestamp(&mut parts, "createdAt", &self.created_at);
-        append_timestamp(&mut parts, "updatedAt", &self.updated_at);
+        append_param(&mut parts, "createdAt", &self.created_at);
+        append_param(&mut parts, "updatedAt", &self.updated_at);
 
         parts
     }
