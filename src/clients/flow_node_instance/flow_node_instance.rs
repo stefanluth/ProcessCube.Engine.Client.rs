@@ -14,36 +14,27 @@ pub struct FlowNodeInstanceList {
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct FlowNodeInstance {
-    /// The instance ID of this FlowNodeInstance.
-    flow_node_instance_id: String,
-    /// The unique ID of the FlowNode, as it is modelled in the diagram.
-    flow_node_id: String,
-    /// The name of the FlowNode, as it is modelled in the diagram.
-    flow_node_name: Option<String>,
-    /// The lane that this FlowNodeInstance belongs to.
-    flow_node_lane: Option<String>,
-    /// Describes the BPMN type of the FlowNode that this instance is executing.
-    flow_node_type: BpmnType,
-    /// If the FlowNodeInstance is an Event, this will contain the type of Event (Message, Signal, Timer, etc).
-    event_type: Option<EventType>,
-    /// Contains the InstanceId of the FlowNodeInstance that was executed before this one.
-    previous_flow_node_instance_id: Option<String>,
-    parent_process_instance_id: Option<String>,
-    state: FlowNodeInstanceState,
-    process_definition_id: String,
-    process_model_id: String,
-    process_instance_id: String,
     correlation_id: String,
-    /// The ProcessToken of the FlowNodeInstance.
-    tokens: Vec<ProcessToken>,
-    /// The token with which the Flow Node Instance was started.
-    start_token: std::collections::HashMap<String, serde_json::Value>,
-    /// The token with which the Flow Node Instance was finished.
-    end_token: Option<std::collections::HashMap<String, serde_json::Value>>,
+    flow_node_id: String,
+    flow_node_instance_id: String,
+    flow_node_type: BpmnType,
     owner_id: String,
+    process_definition_id: String,
+    process_instance_id: String,
+    process_model_id: String,
+    start_token: std::collections::HashMap<String, serde_json::Value>,
+    state: FlowNodeInstanceState,
+    tokens: Vec<ProcessToken>,
+
+    end_token: Option<std::collections::HashMap<String, serde_json::Value>>,
     error: Option<serde_json::Value>,
-    started_at: Option<String>,
+    event_type: Option<EventType>,
     finished_at: Option<String>,
+    flow_node_lane: Option<String>,
+    flow_node_name: Option<String>,
+    parent_process_instance_id: Option<String>,
+    previous_flow_node_instance_id: Option<String>,
+    started_at: Option<String>,
     triggered_by_flow_node_instance: Option<Box<FlowNodeInstance>>,
 }
 
@@ -51,23 +42,23 @@ pub struct FlowNodeInstance {
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub enum FlowNodeInstanceState {
+    Canceled,
+    Error,
+    Finished,
     Running,
     Suspended,
-    Finished,
     Terminated,
-    Error,
-    Canceled,
 }
 
 impl FlowNodeInstanceState {
     pub fn as_str(&self) -> &'static str {
         match *self {
+            FlowNodeInstanceState::Canceled => "canceled",
+            FlowNodeInstanceState::Error => "error",
+            FlowNodeInstanceState::Finished => "finished",
             FlowNodeInstanceState::Running => "running",
             FlowNodeInstanceState::Suspended => "suspended",
-            FlowNodeInstanceState::Finished => "finished",
             FlowNodeInstanceState::Terminated => "terminated",
-            FlowNodeInstanceState::Error => "error",
-            FlowNodeInstanceState::Canceled => "canceled",
         }
     }
 }
@@ -75,29 +66,29 @@ impl FlowNodeInstanceState {
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ProcessToken {
-    flow_node_instance_id: String,
     created_at: String,
+    flow_node_instance_id: String,
     payload: serde_json::Value,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct FlowNodeInstancesQuery {
-    pub flow_node_instance_id: Option<String>,
-    pub flow_node_id: Option<String>,
-    pub flow_node_name: Option<String>,
-    pub flow_node_lane: Option<String>,
-    pub flow_node_type: Option<String>,
-    pub event_type: Option<String>,
     pub correlation_id: Option<String>,
-    pub process_definition_id: Option<String>,
-    pub process_model_id: Option<String>,
-    pub process_instance_id: Option<String>,
-    pub owner_id: Option<String>,
-    pub state: Option<String>,
-    pub previous_flow_node_instance_id: Option<String>,
-    pub parent_process_instance_id: Option<String>,
     pub created_at: Option<String>,
+    pub event_type: Option<String>,
+    pub flow_node_id: Option<String>,
+    pub flow_node_instance_id: Option<String>,
+    pub flow_node_lane: Option<String>,
+    pub flow_node_name: Option<String>,
+    pub flow_node_type: Option<String>,
+    pub owner_id: Option<String>,
+    pub parent_process_instance_id: Option<String>,
+    pub previous_flow_node_instance_id: Option<String>,
+    pub process_definition_id: Option<String>,
+    pub process_instance_id: Option<String>,
+    pub process_model_id: Option<String>,
+    pub state: Option<String>,
     pub updated_at: Option<String>,
 }
 
