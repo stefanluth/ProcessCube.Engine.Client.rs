@@ -60,13 +60,18 @@ impl ProcessModelClient {
         offset: Option<u32>,
         limit: Option<u32>,
     ) -> Result<ProcessModelList, EngineError> {
-        let mut url = self.process_models_url.clone();
+        let mut query_params = Vec::new();
         if let Some(offset) = offset {
-            url = format!("{}?offset={}", url, offset);
+            query_params.push(format!("offset={}", offset));
         }
         if let Some(limit) = limit {
-            url = format!("{}?limit={}", url, limit);
+            query_params.push(format!("limit={}", limit));
         }
+
+        let url = match query_params.is_empty() {
+            true => self.process_models_url.clone(),
+            false => format!("{}?{}", self.process_models_url, query_params.join("&")),
+        };
 
         self.api_client.get::<ProcessModelList>(&url).await
     }
