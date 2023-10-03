@@ -1,9 +1,12 @@
 use crate::clients::{api::api_client::ApiClient, error::EngineError};
 
-use super::event::EventType;
-
 const MESSAGES_ENDPOINT: &str = "/messages";
 const SIGNALS_ENDPOINT: &str = "/signals";
+
+enum EventType {
+    Message,
+    Signal,
+}
 
 /// A client for triggering events in the 5Minds Engine.
 #[derive(Clone)]
