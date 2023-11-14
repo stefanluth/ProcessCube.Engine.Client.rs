@@ -1,4 +1,4 @@
-# EngineClient.rs
+# ProcessCube.Engine.Client.rs
 
 A 5Minds ProcessCube® Engine client written in Rust.
 
