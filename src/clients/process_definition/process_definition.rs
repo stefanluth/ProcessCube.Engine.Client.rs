@@ -5,6 +5,7 @@ use crate::clients::process_model::process_model::ProcessModel;
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ProcessDefinition {
+    #[serde(rename = "processDefinitionId")]
     pub id: String,
     pub xml: String,
     pub hash: String,
@@ -18,4 +19,11 @@ pub struct ProcessDefinition {
 pub struct ProcessDefinitionList {
     pub process_definitions: Vec<ProcessDefinition>,
     pub total_count: u32,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct PersistProcessDefinitionPayload {
+    pub xml: String,
+    pub overwrite_existing: bool,
 }
