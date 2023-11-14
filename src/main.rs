@@ -39,12 +39,12 @@ async fn main() -> () {
             let client = client_factory.create_application_info_client();
             match get {
                 GetApplicationInfo::Info => match client.get_application_info().await {
-                    Ok(info) => println!("{:?}", info),
-                    Err(e) => eprintln!("Error getting application info: {:?}", e),
+                    Ok(info) => println!("{:#?}", info),
+                    Err(e) => eprintln!("Error getting application info: {:#?}", e),
                 },
                 GetApplicationInfo::Authority => match client.get_authority_info().await {
-                    Ok(authority) => println!("{:?}", authority),
-                    Err(e) => eprintln!("Error getting authority: {:?}", e),
+                    Ok(authority) => println!("{:#?}", authority),
+                    Err(e) => eprintln!("Error getting authority: {:#?}", e),
                 },
             }
         }
@@ -60,14 +60,14 @@ async fn main() -> () {
             match cmd {
                 ProcessDefinition::GetAll => {
                     match client.get_process_definitions(None, None).await {
-                        Ok(process_definitions) => println!("{:?}", process_definitions),
-                        Err(e) => eprintln!("Error getting process definitions: {:?}", e),
+                        Ok(process_definitions) => println!("{:#?}", process_definitions),
+                        Err(e) => eprintln!("Error getting process definitions: {:#?}", e),
                     }
                 }
                 ProcessDefinition::GetById { id } => {
                     match client.get_process_definition_by_id(&id).await {
-                        Ok(process_definition) => println!("{:?}", process_definition),
-                        Err(e) => eprintln!("Error getting process definition: {:?}", e),
+                        Ok(process_definition) => println!("{:#?}", process_definition),
+                        Err(e) => eprintln!("Error getting process definition: {:#?}", e),
                     }
                 }
                 ProcessDefinition::Post {
@@ -82,8 +82,8 @@ async fn main() -> () {
                         },
                     };
                     match client.upload_process_definition(request).await {
-                        Ok(process_definition) => println!("{:?}", process_definition),
-                        Err(e) => eprintln!("Error uploading process definition: {:?}", e),
+                        Ok(_) => println!("Process definition uploaded"),
+                        Err(e) => eprintln!("Error uploading process definition: {:#?}", e),
                     }
                 }
                 ProcessDefinition::Delete {
@@ -94,7 +94,7 @@ async fn main() -> () {
                     .await
                 {
                     Ok(_) => println!("Process definition deleted"),
-                    Err(e) => eprintln!("Error deleting process definition: {:?}", e),
+                    Err(e) => eprintln!("Error deleting process definition: {:#?}", e),
                 },
             }
         }
