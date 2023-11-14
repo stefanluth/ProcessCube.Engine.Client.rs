@@ -3,11 +3,15 @@ use serde::{Deserialize, Serialize};
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ProcessModel {
+    #[serde(rename = "processModelId")]
+    pub id: String,
+    #[serde(rename = "processModelName")]
+    pub name: Option<String>,
     pub process_definition_id: String,
-    pub process_model_id: String,
-    pub process_model_name: Option<String>,
+    pub version: Option<String>,
+    pub custom_properties: serde_json::Value,
     pub is_executable: bool,
-    pub lane_set: Option<Lane>,
+    pub lane_set: LaneSet,
     pub start_events: Vec<StartEvent>,
     pub end_events: Vec<EndEvent>,
     pub flow_nodes: Vec<FlowNode>,
@@ -39,21 +43,38 @@ pub struct ProcessStartResponse {
     pub token_payload: serde_json::Value,
 }
 
+impl Default for ProcessStartResponse {
+    fn default() -> Self {
+        ProcessStartResponse {
+            process_instance_id: String::new(),
+            correlation_id: String::new(),
+            end_event_id: String::new(),
+            token_payload: serde_json::Value::Null,
+        }
+    }
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct LaneSet {
+    lanes: Vec<Lane>,
+}
+
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Lane {
-    name: String,
-    flow_node_references: Vec<String>,
-    child_lane_set: Vec<String>,
     id: String,
-    documentation: Vec<String>,
-    extension_elements: ExtensionElements,
+    extension_elements: Option<ExtensionElements>,
+    flow_node_references: Option<Vec<String>>,
+    name: Option<String>,
+    child_lane_set: Option<Vec<String>>,
+    documentation: Option<Vec<String>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ExtensionElements {
-    camunda_execution_listener: CamundaExecutionListener,
+    camunda_execution_listener: Option<CamundaExecutionListener>,
     camunda_extension_properties: Vec<CamundaExtensionProperties>,
 }
 
@@ -74,48 +95,48 @@ pub struct CamundaExtensionProperties {
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct StartEvent {
-    timer_type: String,
-    timer_value: String,
-    message_name: String,
-    message_id: String,
-    signal_name: String,
-    signal_id: String,
-    name: String,
-    flow_node_type: String,
     id: String,
-    custom_properties: serde_json::Value,
-    documentation: Vec<String>,
+    name: String,
     process_model_id: String,
     process_model_name: String,
+    custom_properties: serde_json::Value,
+    flow_node_type: String,
+    timer_type: Option<String>,
+    timer_value: Option<String>,
+    message_name: Option<String>,
+    message_id: Option<String>,
+    signal_name: Option<String>,
+    signal_id: Option<String>,
+    documentation: Option<Vec<String>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct EndEvent {
-    error_name: String,
-    error_code: String,
-    error_message: String,
-    message_name: String,
-    message_id: String,
-    signal_name: String,
-    signal_id: String,
-    name: String,
-    flow_node_type: String,
     id: String,
-    custom_properties: serde_json::Value,
-    documentation: Vec<String>,
+    name: String,
     process_model_id: String,
     process_model_name: String,
+    custom_properties: serde_json::Value,
+    flow_node_type: String,
+    error_name: Option<String>,
+    error_code: Option<String>,
+    error_message: Option<String>,
+    message_name: Option<String>,
+    message_id: Option<String>,
+    signal_name: Option<String>,
+    signal_id: Option<String>,
+    documentation: Option<Vec<String>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct FlowNode {
-    name: String,
-    flow_node_type: String,
     id: String,
+    name: String,
     custom_properties: serde_json::Value,
-    documentation: Vec<String>,
+    flow_node_type: String,
     process_model_id: String,
     process_model_name: String,
+    documentation: Option<Vec<String>>,
 }
