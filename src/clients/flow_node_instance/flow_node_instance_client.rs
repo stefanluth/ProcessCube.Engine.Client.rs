@@ -72,8 +72,6 @@ impl FlowNodeInstanceClient {
             false => format!("{}?{}", self.flow_node_instance_url, query_params.join("&")),
         };
 
-        println!("URL: {}", url);
-
         self.api_client.get::<FlowNodeInstanceList>(&url).await
     }
 }
