@@ -11,16 +11,24 @@ pub struct EngineError {
     pub message: String,
     #[serde(rename = "callStack")]
     pub stack: String,
-    pub code: u32,
+    pub code: u16,
+    pub fatal: bool,
 }
 
 impl EngineError {
-    pub fn new(error_type: String, message: String, stack: String, code: u32) -> EngineError {
+    pub fn new(
+        error_type: String,
+        message: String,
+        stack: String,
+        code: u16,
+        fatal: bool,
+    ) -> EngineError {
         EngineError {
             error_type,
             message,
             stack,
             code,
+            fatal,
         }
     }
 }
@@ -28,12 +36,22 @@ impl EngineError {
 impl From<reqwest::Error> for EngineError {
     /// Converts a reqwest::Error into an EngineError.
     fn from(err: reqwest::Error) -> Self {
-        EngineError::new(
-            "InternalError".to_string(),
-            "Error processing request".to_string(),
-            err.to_string(),
-            500,
-        )
+        match err.status() {
+            Some(status) => EngineError::new(
+                "RequestError".to_string(),
+                "Error processing request".to_string(),
+                err.to_string(),
+                status.as_u16(),
+                false,
+            ),
+            None => EngineError::new(
+                "InternalError".to_string(),
+                "Error processing request".to_string(),
+                err.to_string(),
+                500,
+                false,
+            ),
+        }
     }
 }
 
@@ -42,8 +60,8 @@ impl fmt::Display for EngineError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
-            "EngineError: error_type: {}, message: {}, stack: {}, code: {}",
-            self.error_type, self.message, self.stack, self.code
+            "EngineError: error_type: {}, message: {}, stack: {}, code: {}, fatal: {}",
+            self.error_type, self.message, self.stack, self.code, self.fatal
         )
     }
 }
