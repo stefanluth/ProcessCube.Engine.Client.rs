@@ -96,7 +96,7 @@ impl ApiClient {
         body: Option<&serde_json::Value>,
     ) -> Result<T, EngineError>
     where
-        T: serde::de::DeserializeOwned,
+        T: serde::de::DeserializeOwned + Default,
     {
         let response = match body {
             Some(body) => {
@@ -116,8 +116,11 @@ impl ApiClient {
             }
         };
 
-        match response.status() {
-            reqwest::StatusCode::OK => Ok(response.json::<T>().await?),
+        match response.status().as_u16() {
+            200..=299 => match response.content_length().unwrap_or_default() {
+                0 => Ok(serde_json::from_str("{}").unwrap_or_default()),
+                _ => Ok(response.json::<T>().await?),
+            },
             _ => Err(response.json::<EngineError>().await?),
         }
     }
