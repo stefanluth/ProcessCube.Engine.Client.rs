@@ -86,16 +86,6 @@ impl ProcessModelClient {
         self.api_client.get::<ProcessModel>(&url).await
     }
 
-    /// Deletes the ProcessModel with the given ID.
-    pub async fn delete_process_model_by_id(
-        &self,
-        process_model_id: &str,
-    ) -> Result<(), EngineError> {
-        let url = format!("{}/{}", self.process_models_url, process_model_id);
-
-        self.api_client.delete::<()>(&url).await
-    }
-
     /// Returns the ProcessDefinition of the ProcessModel with the given ID.
     pub async fn get_process_definition_by_process_model_id(
         &self,
@@ -141,5 +131,15 @@ impl ProcessModelClient {
         let url = format!("{}/{}/disable", self.process_models_url, process_model_id);
 
         self.api_client.post::<()>(&url, None).await
+    }
+
+    /// Deletes the ProcessModel with the given ID.
+    pub async fn delete_process_model_by_id(
+        &self,
+        process_model_id: &str,
+    ) -> Result<(), EngineError> {
+        let url = format!("{}/{}", self.process_models_url, process_model_id);
+
+        self.api_client.delete::<()>(&url).await
     }
 }
