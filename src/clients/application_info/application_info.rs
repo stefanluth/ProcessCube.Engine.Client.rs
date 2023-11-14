@@ -16,5 +16,5 @@ pub struct ApplicationInfo {
     pub version: String,
     pub authority_url: String,
     pub allow_anonymous_root_access: bool,
-    pub extra_info: Option<ExtraInfo>,
+    pub extra_info: ExtraInfo,
 }
