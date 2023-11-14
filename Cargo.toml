@@ -1,7 +1,7 @@
 [package]
 name = "processcube_engine_client"
 authors = ["Stefan Luthardt  <stefan@luthardt.dev>"]
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 description = "5Minds ProcessCube® Engine client written in Rust"
 license = "MIT"
