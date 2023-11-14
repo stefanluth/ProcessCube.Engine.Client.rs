@@ -1,6 +1,6 @@
 use clap::Parser;
 
-use engine_client::{
+use processcube_engine_client::{
     cli::{
         client::Client,
         subcommands::{

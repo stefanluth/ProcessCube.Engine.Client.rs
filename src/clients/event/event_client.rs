@@ -24,7 +24,7 @@ impl EventClient {
     ///
     /// # Example
     /// ```
-    /// use engine_client::clients::{api::api_client::ApiClient, event::event_client::EventClient, error::EngineError};
+    /// use processcube_engine_client::clients::{api::api_client::ApiClient, event::event_client::EventClient, error::EngineError};
     /// const DUMMY_TOKEN: &str = "Bearer ZHVtbXlfdG9rZW4=";
     /// const ENGINE_URL: &str = "http://localhost:10560";
     /// // Be sure to have a running 5Minds Engine at the given URL

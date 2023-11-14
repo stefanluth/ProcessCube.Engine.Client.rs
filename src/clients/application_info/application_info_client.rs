@@ -21,7 +21,7 @@ impl ApplicationInfoClient {
     ///
     /// # Example
     /// ```
-    /// use engine_client::clients::{api::api_client::ApiClient, application_info::application_info_client::ApplicationInfoClient, error::EngineError};
+    /// use processcube_engine_client::clients::{api::api_client::ApiClient, application_info::application_info_client::ApplicationInfoClient, error::EngineError};
     /// const DUMMY_TOKEN: &str = "Bearer ZHVtbXlfdG9rZW4=";
     /// const ENGINE_URL: &str = "http://localhost:10560";
     /// // Be sure to have a running 5Minds Engine at the given URL
