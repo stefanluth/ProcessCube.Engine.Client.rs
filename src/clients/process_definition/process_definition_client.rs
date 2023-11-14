@@ -1,6 +1,8 @@
 use crate::clients::{api::api_client::ApiClient, error::EngineError};
 
-use super::process_definition::{ProcessDefinition, ProcessDefinitionList};
+use super::process_definition::{
+    PersistProcessDefinitionPayload, ProcessDefinition, ProcessDefinitionList,
+};
 
 const PROCESS_DEFINITIONS_ENDPOINT: &str = "/process_definitions";
 
@@ -87,28 +89,13 @@ impl ProcessDefinitionClient {
     /// Uploads a new ProcessDefinition to the 5Minds Engine.
     pub async fn upload_process_definition(
         &self,
-        xml: &str,
-        override_existing: Option<bool>,
-    ) -> Result<ProcessDefinition, EngineError> {
-        let url = format!(
-            "{}?overrideExisting={}",
-            self.process_definitions_url,
-            override_existing.unwrap_or(false)
-        );
-        let response = self
-            .api_client
-            .http_client
-            .post(&url)
-            .header("Authorization", self.api_client.get_auth_token())
-            .header("Content-Type", "application/xml")
-            .body(xml.to_string())
-            .send()
-            .await?;
+        request: PersistProcessDefinitionPayload,
+    ) -> Result<String, EngineError> {
+        let request_json = serde_json::to_value(request).expect("Failed to serialize request");
 
-        match response.status() {
-            reqwest::StatusCode::OK => Ok(response.json::<ProcessDefinition>().await?),
-            _ => Err(response.json::<EngineError>().await?),
-        }
+        self.api_client
+            .post::<String>(&self.process_definitions_url, Some(&request_json))
+            .await
     }
 
     /// Deletes the ProcessDefinition with the given ID.
