@@ -90,11 +90,11 @@ impl ProcessDefinitionClient {
     pub async fn upload_process_definition(
         &self,
         request: PersistProcessDefinitionPayload,
-    ) -> Result<String, EngineError> {
+    ) -> Result<(), EngineError> {
         let request_json = serde_json::to_value(request).expect("Failed to serialize request");
 
         self.api_client
-            .post::<String>(&self.process_definitions_url, Some(&request_json))
+            .post::<()>(&self.process_definitions_url, Some(&request_json))
             .await
     }
 
