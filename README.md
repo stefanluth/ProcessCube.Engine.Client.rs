@@ -7,51 +7,24 @@ This client was designed to work with the 5Minds ProcessCube® Engine API used i
 
 ## Current coverage
 
-### Clients
-
-| Endpoint            | Support |
-| ------------------- | :-----: |
-| AnonymousSessions   |   ❌    |
-| ApplicationInfo     |   ✅    |
-| Correlations        |   ❌    |
-| Cronjobs            |   ❌    |
-| DataObjectInstances |   ❌    |
-| EmptyActivities     |   ❌    |
-| Events              |   ✅    |
-| ExternalTasks       |   ❌    |
-| FlowNodeInstances   |   ✅    |
-| ManualTasks         |   ❌    |
-| Notifications       |   ❌    |
-| ProcessDefinitions  |   ✅    |
-| ProcessInstances    |   ❌    |
-| ProcessModels       |   ✅    |
-| UserMetadata        |   ❌    |
-| UserTasks           |   ❌    |
-
-✅ Full Support -
-❌ No Support -
-GET/POST/... Partial Support
-
-### CLI
-
-| Endpoint            | Support |
-| ------------------- | :-----: |
-| AnonymousSessions   |   ❌    |
-| ApplicationInfo     |   ✅    |
-| Correlations        |   ❌    |
-| Cronjobs            |   ❌    |
-| DataObjectInstances |   ❌    |
-| EmptyActivities     |   ❌    |
-| Events              |   ❌    |
-| ExternalTasks       |   ❌    |
-| FlowNodeInstances   |   ❌    |
-| ManualTasks         |   ❌    |
-| Notifications       |   ❌    |
-| ProcessDefinitions  |   ✅    |
-| ProcessInstances    |   ❌    |
-| ProcessModels       |   ❌    |
-| UserMetadata        |   ❌    |
-| UserTasks           |   ❌    |
+| Endpoint            | Library | CLI |
+| ------------------- | :-----: | :-: |
+| AnonymousSessions   |   ❌    | ❌  |
+| ApplicationInfo     |   ✅    | ✅  |
+| Correlations        |   ❌    | ❌  |
+| Cronjobs            |   ❌    | ❌  |
+| DataObjectInstances |   ❌    | ❌  |
+| EmptyActivities     |   ❌    | ❌  |
+| Events              |   ✅    | ❌  |
+| ExternalTasks       |   ❌    | ❌  |
+| FlowNodeInstances   |   ✅    | ❌  |
+| ManualTasks         |   ❌    | ❌  |
+| Notifications       |   ❌    | ❌  |
+| ProcessDefinitions  |   ✅    | ✅  |
+| ProcessInstances    |   ❌    | ❌  |
+| ProcessModels       |   ✅    | ❌  |
+| UserMetadata        |   ❌    | ❌  |
+| UserTasks           |   ❌    | ❌  |
 
 ✅ Full Support -
 ❌ No Support -
@@ -59,9 +32,9 @@ GET/POST/... Partial Support
 
 ## How to Use
 
-### Executable
+### CLI
 
-If you just want to use the `processcube_engine_client` CLI, you can use
+If you just want to use the `processcube_engine_client` CLI tool, you can use
 
 ```shell
 cargo install processcube_engine_client
@@ -71,7 +44,7 @@ to install it. You should then be able to use it, e.g. `processcube_engine_clien
 
 ### Library
 
-When developing an application, you can use the library by adding this package to your project.
+When developing an application, you can use the library by adding this package to your project, i.e.
 
 ```shell
 cargo add processcube_engine_client
