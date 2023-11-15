@@ -4,7 +4,6 @@ authors = ["Stefan Luthardt  <stefan@luthardt.dev>"]
 version = "0.1.1"
 edition = "2021"
 description = "5Minds ProcessCube® Engine client written in Rust"
-license = "MIT"
 license-file = "LICENSE"
 repository = "https://github.com/stefanluth/ProcessCube.Engine.Client.rs"
 
