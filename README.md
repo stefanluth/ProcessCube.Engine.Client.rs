@@ -1,11 +1,15 @@
 # ProcessCube.Engine.Client.rs
 
-A 5Minds ProcessCube® Engine client written in Rust.
+A library and CLI tool written in Rust, to send requests to the 5Minds ProcessCube® Engine API.
 
-This client was designed to work with the 5Minds ProcessCube® Engine API used in the Docker Image
-`5minds/processcube_engine:16.0.2` and API changes after this version are not supported.
+This project was designed to work with the ProcessCube® Engine API provided in the Docker Image
+[`5minds/processcube_engine:16.0.0`](https://hub.docker.com/r/5minds/processcube_engine/tags).
+
+Older or newer versions _might_ work, but support is not guaranteed.
 
 ## Current coverage
+
+Coverage of the available endpoints is currently rather limited.
 
 | Endpoint            | Library | CLI |
 | ------------------- | :-----: | :-: |
@@ -68,3 +72,19 @@ async fn main() -> Result<(), EngineError> {
     Ok(())
 }
 ```
+
+## Development
+
+### Prerequisites
+
+- [Rust](https://www.rust-lang.org/tools/install)
+- [Docker](https://docs.docker.com/get-docker/)
+
+### Setup
+
+1. Clone this repository
+2. Run `docker run -p 10560:80 5minds/processcube_engine:16.0.0` to start the 5Minds ProcessCube® Engine
+3. Ready to go!
+
+You can now run `cargo test` to run the tests, or `cargo run --bin processcube_engine_client` to run the CLI tool.
+Swagger documentation for the API can be found at [`http://localhost:10560/`](http://localhost:10560/).
