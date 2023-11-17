@@ -4,7 +4,7 @@ use super::flow_node_instance::{FlowNodeInstanceList, FlowNodeInstancesQuery};
 
 const FLOW_NODE_INSTANCES_ENDPOINT: &str = "/flow_node_instances";
 
-/// A client for communicating with the 5Minds Engine's FlowNodeInstance API.
+/// A client for communicating with the ProcessCube® Engine's FlowNodeInstance API.
 #[derive(Clone)]
 pub struct FlowNodeInstanceClient {
     api_client: ApiClient,
@@ -15,14 +15,14 @@ impl FlowNodeInstanceClient {
     /// Creates a new instance of the FlowNodeInstanceClient.
     ///
     /// # Arguments
-    /// * `api_client` - The ApiClient to use for communication with the 5Minds Engine.
+    /// * `api_client` - The ApiClient to use for communication with the ProcessCube® Engine.
     ///
     /// # Example
     /// ```
     /// use processcube_engine_client::clients::{api::api_client::ApiClient, flow_node_instance::flow_node_instance_client::FlowNodeInstanceClient, error::EngineError};
     /// const DUMMY_TOKEN: &str = "Bearer ZHVtbXlfdG9rZW4=";
     /// const ENGINE_URL: &str = "http://localhost:10560";
-    /// // Be sure to have a running 5Minds Engine at the given URL
+    /// // Be sure to have a running ProcessCube® Engine at the given URL
     ///
     /// #[tokio::main]
     /// async fn main() -> Result<(), EngineError> {

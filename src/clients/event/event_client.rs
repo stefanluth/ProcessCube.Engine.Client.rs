@@ -8,7 +8,7 @@ enum EventType {
     Signal,
 }
 
-/// A client for triggering events in the 5Minds Engine.
+/// A client for triggering events in the ProcessCube® Engine.
 #[derive(Clone)]
 pub struct EventClient {
     api_client: ApiClient,
@@ -20,14 +20,14 @@ impl EventClient {
     /// Creates a new instance of the EventClient.
     ///
     /// # Arguments
-    /// * `api_client` - The ApiClient to use for communication with the 5Minds Engine.
+    /// * `api_client` - The ApiClient to use for communication with the ProcessCube® Engine.
     ///
     /// # Example
     /// ```
     /// use processcube_engine_client::clients::{api::api_client::ApiClient, event::event_client::EventClient, error::EngineError};
     /// const DUMMY_TOKEN: &str = "Bearer ZHVtbXlfdG9rZW4=";
     /// const ENGINE_URL: &str = "http://localhost:10560";
-    /// // Be sure to have a running 5Minds Engine at the given URL
+    /// // Be sure to have a running ProcessCube® Engine at the given URL
     ///
     /// #[tokio::main]
     /// async fn main() -> Result<(), EngineError> {

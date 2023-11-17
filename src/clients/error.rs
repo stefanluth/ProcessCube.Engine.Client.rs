@@ -2,7 +2,7 @@ use std::fmt;
 
 use serde::{Deserialize, Serialize};
 
-/// Represents an error returned by the 5Minds Engine.
+/// Represents an error returned by the ProcessCube® Engine.
 #[derive(Debug, Deserialize, Serialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct EngineError {

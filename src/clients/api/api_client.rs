@@ -4,7 +4,7 @@ use crate::clients::error::EngineError;
 
 const ENGINE_API_ENDPOINT: &str = "/atlas_engine/api/v1";
 
-/// A client for communicating with the 5Minds Engine.
+/// A client for communicating with the ProcessCube® Engine API.
 ///
 /// It is used as a base for all other clients and uses the reqwest Client for HTTP communication.
 #[derive(Clone)]
@@ -18,15 +18,15 @@ impl ApiClient {
     /// Creates a new instance of the ApiClient.
     ///
     /// # Arguments
-    /// * `engine_url` - The URL of the 5Minds Engine.
-    /// * `auth_token` - The authentication token to use when communicating with the 5Minds Engine.
+    /// * `engine_url` - The URL of the ProcessCube® Engine.
+    /// * `auth_token` - The authentication token to use when communicating with the ProcessCube® Engine.
     ///
     /// # Example
     /// ```
     /// use processcube_engine_client::clients::{api::api_client::ApiClient, error::EngineError};
     /// const DUMMY_TOKEN: &str = "Bearer ZHVtbXlfdG9rZW4=";
     /// const ENGINE_URL: &str = "http://localhost:10560";
-    /// // Be sure to have a running 5Minds Engine at the given URL
+    /// // Be sure to have a running ProcessCube® Engine at the given URL
     ///
     /// #[tokio::main]
     /// async fn main() -> Result<(), EngineError> {
@@ -49,12 +49,12 @@ impl ApiClient {
         }
     }
 
-    /// Returns the URL of the 5Minds Engine.
+    /// Returns The URL of the ProcessCube® Engine.
     pub fn get_engine_url(&self) -> &str {
         &self.engine_url
     }
 
-    /// Returns the endpoint of the 5Minds Engine API.
+    /// Returns the endpoint of the ProcessCube® Engine API.
     pub fn get_engine_api_endpoint(&self) -> &str {
         ENGINE_API_ENDPOINT
     }

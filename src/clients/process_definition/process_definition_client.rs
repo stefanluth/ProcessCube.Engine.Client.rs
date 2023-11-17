@@ -6,7 +6,7 @@ use super::process_definition::{
 
 const PROCESS_DEFINITIONS_ENDPOINT: &str = "/process_definitions";
 
-/// A client for communicating with the 5Minds Engine's ProcessDefinition API.
+/// A client for communicating with the ProcessCube® Engine's ProcessDefinition API.
 #[derive(Clone)]
 pub struct ProcessDefinitionClient {
     api_client: ApiClient,
@@ -17,14 +17,14 @@ impl ProcessDefinitionClient {
     /// Creates a new instance of the ProcessDefinitionClient.
     ///
     /// # Arguments
-    /// * `api_client` - The ApiClient to use for communication with the 5Minds Engine.
+    /// * `api_client` - The ApiClient to use for communication with the ProcessCube® Engine.
     ///
     /// # Example
     /// ```
     /// use processcube_engine_client::clients::{api::api_client::ApiClient, process_definition::process_definition_client::ProcessDefinitionClient, error::EngineError};
     /// const DUMMY_TOKEN: &str = "Bearer ZHVtbXlfdG9rZW4=";
     /// const ENGINE_URL: &str = "http://localhost:10560";
-    /// // Be sure to have a running 5Minds Engine at the given URL
+    /// // Be sure to have a running ProcessCube® Engine at the given URL
     ///
     /// #[tokio::main]
     /// async fn main() -> Result<(), EngineError> {
@@ -50,7 +50,7 @@ impl ProcessDefinitionClient {
         }
     }
 
-    /// Returns all ProcessDefinitions deployed to the 5Minds Engine.
+    /// Returns all ProcessDefinitions deployed to the ProcessCube® Engine.
     pub async fn get_process_definitions(
         &self,
         offset: Option<u32>,
@@ -86,7 +86,7 @@ impl ProcessDefinitionClient {
         self.api_client.get::<ProcessDefinition>(&url).await
     }
 
-    /// Uploads a new ProcessDefinition to the 5Minds Engine.
+    /// Uploads a new ProcessDefinition to the ProcessCube® Engine.
     pub async fn upload_process_definition(
         &self,
         request: PersistProcessDefinitionPayload,

@@ -5,9 +5,9 @@ use super::{
     process_model::process_model_client::ProcessModelClient,
 };
 
-/// A factory for creating clients for the 5Minds Engine.
+/// A factory for creating clients for the ProcessCube® Engine.
 pub struct ClientFactory {
-    /// The client used to communicate with the 5Minds Engine.
+    /// The client used to communicate with the ProcessCube® Engine.
     pub api_client: ApiClient,
 }
 
@@ -15,15 +15,15 @@ impl ClientFactory {
     /// Creates a new instance of the ClientFactory.
     ///
     /// # Arguments
-    /// * `engine_url` - The URL of the 5Minds Engine.
-    /// * `auth_token` - The authentication token to use when communicating with the 5Minds Engine.
+    /// * `engine_url` - The URL of the ProcessCube® Engine.
+    /// * `auth_token` - The authentication token to use when communicating with the ProcessCube® Engine.
     ///
     /// # Example
     /// ```
     /// use processcube_engine_client::clients::{client_factory::ClientFactory, error::EngineError};
     /// const DUMMY_TOKEN: &str = "Bearer ZHVtbXlfdG9rZW4=";
     /// const ENGINE_URL: &str = "http://localhost:10560";
-    /// // Be sure to have a running 5Minds Engine at the given URL
+    /// // Be sure to have a running ProcessCube® Engine at the given URL
     ///
     /// #[tokio::main]
     /// async fn main() -> Result<(), EngineError> {
