@@ -59,7 +59,7 @@ A short usage example:
 ```rust
 use processcube_engine_client::clients::{client_factory::ClientFactory, error::EngineError};
 
-// Be sure to have a running 5Minds Engine at the given URL
+// Be sure to have a running ProcessCube® Engine at the given URL
 const ENGINE_URL: &str = "http://localhost:10560";
 const DUMMY_TOKEN: &str = "Bearer ZHVtbXlfdG9rZW4=";
 
