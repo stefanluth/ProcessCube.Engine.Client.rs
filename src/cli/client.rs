@@ -41,7 +41,6 @@ pub enum Client {
     ProcessModel,
 }
 
-#[tokio::main]
 pub async fn register_commands(cli: Cli) {
     let client_factory = ClientFactory::new(&cli.engine_url, &cli.token);
 
