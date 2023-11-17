@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Start 5Minds ProcessCube Engine
+      - name: Start ProcessCube® Engine
         run: docker run --name processcube_engine -d -p 10560:80 5minds/processcube_engine:16.0.0
 
       - name: Install Rust
@@ -26,11 +26,11 @@ jobs:
       - name: Run tests
         run: cargo test --all --verbose
 
-      - name: Show 5Minds Engine logs if tests failed
+      - name: Show ProcessCube® Engine logs if tests failed
         if: ${{ job.status == 'failure' }}
         run: docker logs processcube_engine
 
-      - name: Stop 5Minds Engine
+      - name: Stop ProcessCube® Engine
         run: |
           docker stop processcube_engine
           docker rm processcube_engine
