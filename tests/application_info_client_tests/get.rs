@@ -3,6 +3,8 @@ use processcube_engine_client::clients::client_factory::ClientFactory;
 const DUMMY_TOKEN: &str = "Bearer ZHVtbXlfdG9rZW4=";
 const ENGINE_URL: &str = "http://localhost:10560";
 
+// Happy cases
+
 #[tokio::test]
 async fn get_application_info() {
     let client_factory = ClientFactory::new(ENGINE_URL, DUMMY_TOKEN);
@@ -37,3 +39,6 @@ async fn get_authority_info() {
 
     assert_eq!(authority_info, "http://localhost:11560/");
 }
+
+// Error cases
+// None
