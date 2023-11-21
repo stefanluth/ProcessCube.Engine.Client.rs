@@ -10,6 +10,12 @@ fn create_application_info_client() {
 }
 
 #[test]
+fn create_correlation_client() {
+    let client_factory = ClientFactory::new(ENGINE_URL, DUMMY_TOKEN);
+    let _client = client_factory.create_correlation_client();
+}
+
+#[test]
 fn create_event_client() {
     let client_factory = ClientFactory::new(ENGINE_URL, DUMMY_TOKEN);
     let _client = client_factory.create_event_client();
