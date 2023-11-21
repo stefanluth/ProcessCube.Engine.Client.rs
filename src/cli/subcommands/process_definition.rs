@@ -11,7 +11,7 @@ use crate::clients::{
 pub enum ProcessDefinitionCommands {
     /// Gets all Process Definitions.
     GetAll,
-    /// Gets a single Process Definition.
+    /// Gets a single Process Definition by ID.
     GetById {
         /// The ID of the Process Definition to retrieve.
         id: String,
