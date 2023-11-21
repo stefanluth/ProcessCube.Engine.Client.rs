@@ -15,7 +15,7 @@ Coverage of the available endpoints is currently rather limited.
 | ------------------- | :-----: | :-: |
 | AnonymousSessions   |   ❌    | ❌  |
 | ApplicationInfo     |   ✅    | ✅  |
-| Correlations        |   ❌    | ❌  |
+| Correlations        |   ✅    | ✅  |
 | Cronjobs            |   ❌    | ❌  |
 | DataObjectInstances |   ❌    | ❌  |
 | EmptyActivities     |   ❌    | ❌  |
