@@ -1,6 +1,6 @@
 use super::{
     api::api_client::ApiClient, application_info::application_info_client::ApplicationInfoClient,
-    event::event_client::EventClient,
+    correlation::correlation_client::CorrelationClient, event::event_client::EventClient,
     process_definition::process_definition_client::ProcessDefinitionClient,
     process_model::process_model_client::ProcessModelClient,
 };
@@ -47,6 +47,11 @@ impl ClientFactory {
     /// Creates a new instance of the ApplicationInfoClient.
     pub fn create_application_info_client(&self) -> ApplicationInfoClient {
         ApplicationInfoClient::new(self.api_client.clone())
+    }
+
+    /// Creates a new instance of the CorrelationClient.
+    pub fn create_correlation_client(&self) -> CorrelationClient {
+        CorrelationClient::new(self.api_client.clone())
     }
 
     /// Creates a new instance of the ProcessDefinitionClient.

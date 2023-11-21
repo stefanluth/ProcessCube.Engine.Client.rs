@@ -28,9 +28,14 @@ pub enum Client {
     ApplicationInfo {
         cmd: subcommands::application_info::ApplicationInfoCommands,
     },
-    /// Trigger events.
+    // Get Correlations.
+    Correlation {
+        #[clap(subcommand)]
+        cmd: subcommands::correlation::CorrelationCommands,
+    },
+    /// Trigger Events.
     Event,
-    /// Get all flow node instances.
+    /// Get all Flow Node Instances.
     FlowNodeInstance,
     /// Handle Process Definitions.
     ProcessDefinition {
@@ -47,6 +52,9 @@ pub async fn register_commands(cli: Cli) {
     match cli.client {
         Client::ApplicationInfo { cmd } => {
             subcommands::application_info::register_commands(client_factory, cmd).await
+        }
+        Client::Correlation { cmd } => {
+            subcommands::correlation::register_commands(client_factory, cmd).await
         }
         Client::Event => {
             println!("Event");

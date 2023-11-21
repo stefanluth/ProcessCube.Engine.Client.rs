@@ -1,6 +1,7 @@
 pub mod api;
 pub mod application_info;
 pub mod client_factory;
+pub mod correlation;
 pub mod error;
 pub mod event;
 pub mod flow_node_instance;
