@@ -50,4 +50,12 @@ async fn delete_process_definition_by_id_invalid_token() {
         .delete_process_definition_by_id("foo", Some(true))
         .await;
     assert!(result.is_err());
+
+    let err = result.unwrap_err();
+    assert_eq!(err.code, 400);
+    assert_eq!(err.error_type, "BadRequestError");
+    assert_eq!(
+        err.message,
+        "Must provide a token by which to create an identity!"
+    )
 }

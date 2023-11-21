@@ -57,6 +57,14 @@ async fn get_process_definition_by_id_invalid_token() {
     // Get a process definition by ID
     let result = client.get_process_definition_by_id("foo").await;
     assert!(result.is_err());
+
+    let err = result.unwrap_err();
+    assert_eq!(err.code, 400);
+    assert_eq!(err.error_type, "BadRequestError");
+    assert_eq!(
+        err.message,
+        "Must provide a token by which to create an identity!"
+    )
 }
 
 #[tokio::test]
@@ -67,4 +75,9 @@ async fn get_process_definition_by_id_not_found() {
     // Get a process definition by ID
     let result = client.get_process_definition_by_id("foo").await;
     assert!(result.is_err());
+
+    let err = result.unwrap_err();
+    assert_eq!(err.code, 404);
+    assert_eq!(err.error_type, "NotFoundError");
+    assert_eq!(err.message, "Process definition with name `foo` not found.");
 }

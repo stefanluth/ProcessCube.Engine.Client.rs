@@ -41,6 +41,14 @@ async fn upload_process_definition_invalid_token() {
         })
         .await;
     assert!(result.is_err());
+
+    let err = result.unwrap_err();
+    assert_eq!(err.code, 400);
+    assert_eq!(err.error_type, "BadRequestError");
+    assert_eq!(
+        err.message,
+        "Must provide a token by which to create an identity!"
+    )
 }
 
 #[tokio::test]
@@ -56,4 +64,11 @@ async fn upload_process_definition_invalid_xml() {
         })
         .await;
     assert!(result.is_err());
+
+    let err = result.unwrap_err();
+    assert_eq!(err.code, 400);
+    assert_eq!(err.error_type, "BadRequestError");
+    assert!(err
+        .message
+        .starts_with("Error: Non-whitespace before first tag."));
 }
